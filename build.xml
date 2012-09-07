@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="intellijprotoeditor" default="all">
+
+
+  <!--property file="build.properties"/-->
+  <!-- Uncomment the following property if no tests compilation is needed -->
+  <!--
+  <property name="skip.tests" value="true"/>
+   -->
+
+  <!-- Compiler options -->
+
+  <property name="compiler.debug" value="on"/>
+  <property name="compiler.generate.no.warnings" value="off"/>
+  <property name="compiler.args" value=""/>
+  <property name="compiler.max.memory" value="128m"/>
+  <property name="idea.home" value="${basedir}/idea"/>
+  <property name="jdk.home.idea_plugin_sdk" value="${idea.home}"/>
+  <property name="path.variable.jdk_home" value="${basedir}/jdk"/>
+  <patternset id="ignored.files">
+    <exclude name="**/CVS/**"/>
+    <exclude name="**/SCCS/**"/>
+    <exclude name="**/RCS/**"/>
+    <exclude name="**/rcs/**"/>
+    <exclude name="**/.DS_Store/**"/>
+    <exclude name="**/.svn/**"/>
+    <exclude name="**/.pyc/**"/>
+    <exclude name="**/.pyo/**"/>
+    <exclude name="**/*.pyc/**"/>
+    <exclude name="**/*.pyo/**"/>
+    <exclude name="**/.git/**"/>
+    <exclude name="**/*.hprof/**"/>
+    <exclude name="**/_svn/**"/>
+    <exclude name="**/.hg/**"/>
+    <exclude name="**/*.lib/**"/>
+    <exclude name="**/*~/**"/>
+    <exclude name="**/__pycache__/**"/>
+    <exclude name="**/.bundle/**"/>
+    <exclude name="**/*.rbc/**"/>
+    <exclude name="**/vssver.scc/**"/>
+    <exclude name="**/vssver2.scc/**"/>
+  </patternset>
+  <patternset id="compiler.resources">
+    <include name="**/?*.properties"/>
+    <include name="**/?*.xml"/>
+    <include name="**/?*.gif"/>
+    <include name="**/?*.png"/>
+    <include name="**/?*.jpeg"/>
+    <include name="**/?*.jpg"/>
+    <include name="**/?*.html"/>
+    <include name="**/?*.dtd"/>
+    <include name="**/?*.tld"/>
+    <include name="**/?*.ftl"/>
+  </patternset>
+
+  <!-- JDK definitions -->
+
+  <property name="jdk.bin.idea_plugin_sdk" value="${path.variable.jdk_home}/bin"/>
+  <path id="jdk.classpath.idea_plugin_sdk">
+    <fileset dir="${jdk.home.idea_plugin_sdk}">
+      <include name="lib/*.jar"/>
+      <include name="${path.variable.jdk_home}/jre/lib/jsse.jar"/>
+      <include name="${path.variable.jdk_home}/jre/lib/jce.jar"/>
+      <include name="${path.variable.jdk_home}/jre/lib/charsets.jar"/>
+      <include name="${path.variable.jdk_home}/jre/lib/rt.jar"/>
+      <include name="${path.variable.jdk_home}/jre/lib/management-agent.jar"/>
+      <include name="${path.variable.jdk_home}/jre/lib/resources.jar"/>
+      <include name="${path.variable.jdk_home}/jre/lib/ext/sunpkcs11.jar"/>
+      <include name="${path.variable.jdk_home}/jre/lib/ext/dnsns.jar"/>
+      <include name="${path.variable.jdk_home}/jre/lib/ext/localedata.jar"/>
+      <include name="${path.variable.jdk_home}/jre/lib/ext/sunjce_provider.jar"/>
+    </fileset>
+  </path>
+
+  <property name="project.jdk.home" value="${jdk.home.idea_plugin_sdk}"/>
+  <property name="project.jdk.bin" value="${jdk.bin.idea_plugin_sdk}"/>
+  <property name="project.jdk.classpath" value="jdk.classpath.idea_plugin_sdk"/>
+
+
+  <!-- Project Libraries -->
+
+  <path id="library.additional_libraries.classpath">
+    <fileset dir="${basedir}/libs">
+      <include name="*.jar"/>
+    </fileset>
+  </path>
+  <!-- Register Custom Compiler Taskdefs -->
+  <property name="javac2.home" value="${idea.home}/lib"/>
+  <path id="javac2.classpath">
+    <pathelement location="${javac2.home}/javac2.jar"/>
+    <pathelement location="${javac2.home}/jdom.jar"/>
+    <pathelement location="${javac2.home}/asm.jar"/>
+    <pathelement location="${javac2.home}/asm-commons.jar"/>
+    <pathelement location="${javac2.home}/jgoodies-forms.jar"/>
+  </path>
+  <target name="register.custom.compilers">
+    <taskdef name="javac2" classname="com.intellij.ant.Javac2" classpathref="javac2.classpath"/>
+    <taskdef name="instrumentIdeaExtensions" classname="com.intellij.ant.InstrumentIdeaExtensions" classpathref="javac2.classpath"/>
+  </target>
+
+  <!-- Modules -->
+
+
+  <!-- Module intellijprotoeditor -->
+
+  <dirname property="module.intellijprotoeditor.basedir" file="${ant.file}"/>
+
+
+  <property name="module.jdk.home.intellijprotoeditor" value="${jdk.home.idea_plugin_sdk}"/>
+  <property name="module.jdk.bin.intellijprotoeditor" value="${jdk.bin.idea_plugin_sdk}"/>
+  <property name="module.jdk.classpath.intellijprotoeditor" value="jdk.classpath.idea_plugin_sdk"/>
+
+  <property name="compiler.args.intellijprotoeditor" value="${compiler.args}"/>
+
+  <property name="intellijprotoeditor.output.dir" value="${module.intellijprotoeditor.basedir}/out/production/intellijprotoeditor"/>
+  <property name="intellijprotoeditor.testoutput.dir" value="${module.intellijprotoeditor.basedir}/out/test/intellijprotoeditor"/>
+
+  <path id="intellijprotoeditor.module.production.classpath">
+    <path refid="${module.jdk.classpath.intellijprotoeditor}"/>
+    <path refid="library.additional_libraries.classpath"/>
+  </path>
+
+  <path id="intellijprotoeditor.runtime.production.module.classpath">
+    <pathelement location="${intellijprotoeditor.output.dir}"/>
+    <path refid="library.additional_libraries.classpath"/>
+  </path>
+
+  <path id="intellijprotoeditor.module.classpath">
+    <path refid="${module.jdk.classpath.intellijprotoeditor}"/>
+    <pathelement location="${intellijprotoeditor.output.dir}"/>
+    <path refid="library.additional_libraries.classpath"/>
+  </path>
+
+  <path id="intellijprotoeditor.runtime.module.classpath">
+    <pathelement location="${intellijprotoeditor.testoutput.dir}"/>
+    <pathelement location="${intellijprotoeditor.output.dir}"/>
+    <path refid="library.additional_libraries.classpath"/>
+  </path>
+
+
+  <patternset id="excluded.from.module.intellijprotoeditor">
+    <patternset refid="ignored.files"/>
+  </patternset>
+
+  <patternset id="excluded.from.compilation.intellijprotoeditor">
+    <patternset refid="excluded.from.module.intellijprotoeditor"/>
+  </patternset>
+
+  <path id="intellijprotoeditor.module.sourcepath">
+    <dirset dir="${module.intellijprotoeditor.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+
+  <path id="intellijprotoeditor.module.test.sourcepath">
+    <dirset dir="${module.intellijprotoeditor.basedir}">
+      <include name="tests"/>
+    </dirset>
+  </path>
+
+
+  <target name="compile.module.intellijprotoeditor" depends="compile.module.intellijprotoeditor.production,compile.module.intellijprotoeditor.tests" description="Compile module intellijprotoeditor"/>
+
+  <target name="compile.module.intellijprotoeditor.production" depends="register.custom.compilers" description="Compile module intellijprotoeditor; production classes">
+    <mkdir dir="${intellijprotoeditor.output.dir}"/>
+    <javac2 destdir="${intellijprotoeditor.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.intellijprotoeditor}/javac">
+      <compilerarg line="${compiler.args.intellijprotoeditor}"/>
+      <classpath refid="intellijprotoeditor.module.production.classpath"/>
+      <src refid="intellijprotoeditor.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.intellijprotoeditor"/>
+    </javac2>
+
+    <copy todir="${intellijprotoeditor.output.dir}">
+      <fileset dir="${module.intellijprotoeditor.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+
+  <target name="compile.module.intellijprotoeditor.tests" depends="register.custom.compilers,compile.module.intellijprotoeditor.production" description="compile module intellijprotoeditor; test classes" unless="skip.tests">
+    <mkdir dir="${intellijprotoeditor.testoutput.dir}"/>
+    <javac2 destdir="${intellijprotoeditor.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.intellijprotoeditor}/javac">
+      <compilerarg line="${compiler.args.intellijprotoeditor}"/>
+      <classpath refid="intellijprotoeditor.module.classpath"/>
+      <src refid="intellijprotoeditor.module.test.sourcepath"/>
+      <patternset refid="excluded.from.compilation.intellijprotoeditor"/>
+    </javac2>
+
+    <copy todir="${intellijprotoeditor.testoutput.dir}">
+      <fileset dir="${module.intellijprotoeditor.basedir}/tests">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+
+  <target name="clean.module.intellijprotoeditor" description="cleanup module">
+    <delete dir="${intellijprotoeditor.output.dir}"/>
+    <delete dir="${intellijprotoeditor.testoutput.dir}"/>
+  </target>
+
+  <property name="intellijprotoeditor.plugin.path.jar" value="${module.intellijprotoeditor.basedir}/intellijprotoeditor.zip"/>
+
+  <!-- Build archive for plugin 'intellijprotoeditor' -->
+  <target name="plugin.build.jar.intellijprotoeditor" depends="compile.module.intellijprotoeditor" description="Build plugin archive for module intellijprotoeditor">
+    <property name="tmp.dir.intellijprotoeditor" value="${module.intellijprotoeditor.basedir}/../temp"/>
+    <mkdir dir="${tmp.dir.intellijprotoeditor}"/>
+    <mkdir dir="${tmp.dir.intellijprotoeditor}/lib"/>
+    <jar destfile="${tmp.dir.intellijprotoeditor}/lib/intellijprotoeditor.jar" duplicate="preserve">
+      <zipfileset dir="${module.intellijprotoeditor.basedir}/out/production/intellijprotoeditor"/>
+      <zipfileset file="${module.intellijprotoeditor.basedir}/src/com/google/protoeditor/META-INF/plugin.xml" prefix="META-INF"/>
+      <manifest>
+        <attribute name="Created-By" value="IntelliJ IDEA"/>
+        <attribute name="Manifest-Version" value="1.0"/>
+      </manifest>
+    </jar>
+    <copy file="${module.intellijprotoeditor.basedir}/libs/jsr305.jar" tofile="${tmp.dir.intellijprotoeditor}/lib/jsr305.jar"/>
+    <copy file="${module.intellijprotoeditor.basedir}/libs/easymock-3.1.jar" tofile="${tmp.dir.intellijprotoeditor}/lib/easymock-3.1.jar"/>
+    <zip destfile="${intellijprotoeditor.plugin.path.jar}">
+      <fileset dir="${module.intellijprotoeditor.basedir}/../temp"/>
+    </zip>
+    <delete dir="${tmp.dir.intellijprotoeditor}"/>
+  </target>
+
+  <target name="clean" depends="clean.module.intellijprotoeditor" description="cleanup all"/>
+
+  <target name="build.modules" depends="clean, plugin.build.jar.intellijprotoeditor" description="build all modules"/>
+
+  <target name="all" depends="build.modules" description="build all"/>
+</project>

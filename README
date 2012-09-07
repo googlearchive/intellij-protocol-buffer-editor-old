@@ -1,1 +1,0 @@
-In order to build this project, you would need to place the idea api folder and jdk folder below this directory and run Ant. To open this project in IntelliJ IDEA, create a project and import the .iml file. You would need to point the IDEA_PLUGIN_SDK to the location of IntelliJ IDEA.
