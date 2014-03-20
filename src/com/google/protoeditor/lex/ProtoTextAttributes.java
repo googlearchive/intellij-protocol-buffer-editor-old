@@ -78,12 +78,11 @@ public class ProtoTextAttributes {
 
   private static TextAttributesKey copyTextAttributesKey(
       String type, TextAttributesKey key, EditorColorsScheme scheme) {
-    TextAttributesKey attributeskey = TextAttributesKey.createTextAttributesKey(type);
     TextAttributes attributes = getAttributes(key, scheme);
-    if (attributes != null) {
-      attributeskey.myDefaultAttributes = getAttributes(key, scheme);
+    if (attributes == null) {
+      return TextAttributesKey.createTextAttributesKey(type);
     }
-    return attributeskey;
+    return TextAttributesKey.createTextAttributesKey(type, attributes);
   }
 
   private static TextAttributesKey createTextAttributesKey(
