@@ -2,11 +2,11 @@
     <name>Google Protocol Buffer Editor</name>
     <id>com.google.protoeditor</id>
     <description>A smart editor for Protocol Buffer definition files.</description>
-    <version>3.0.4</version>
+    <version>3.0.5</version>
     <change-notes>
         <![CDATA[
-      === 3.0.4 <br>
-      * Now compatible with IJ 12<br>
+      === 3.0.5 <br>
+      * Now compatible with IJ 13.1<br>
       ]]>
     </change-notes>
     <vendor logo="/com/google/protoeditor/proto-file.png">Protoeditor Team</vendor>
