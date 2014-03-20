@@ -1,0 +1,40 @@
+<idea-plugin version="2">
+    <name>Google Protocol Buffer Editor</name>
+    <id>com.google.protoeditor</id>
+    <description>A smart editor for Protocol Buffer definition files.</description>
+    <version>3.0.4</version>
+    <change-notes>
+        <![CDATA[
+      === 3.0.4 <br>
+      * Now compatible with IJ 12<br>
+      ]]>
+    </change-notes>
+    <vendor logo="/com/google/protoeditor/proto-file.png">Protoeditor Team</vendor>
+    <idea-version since-build="9000"/>
+
+    <extensionPoints>
+        <extensionPoint name="protoOptionProvider" interface="com.google.protoeditor.parsing.ProtoOptionProvider" />
+        <extensionPoint name="protoValidatorExtn" interface="com.google.protoeditor.validation.ProtoValidatorExtn" />
+    </extensionPoints>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <fileTypeFactory implementation="com.google.protoeditor.ProtoFileTypeFactory"/>
+
+        <lang.parserDefinition language="PROTO" implementationClass="com.google.protoeditor.ProtoParserDefinition"/>
+        <lang.braceMatcher language="PROTO" implementationClass="com.google.protoeditor.highlighting.ProtoBraceMatcher"/>
+        <lang.foldingBuilder language="PROTO" implementationClass="com.google.protoeditor.ProtoFoldingBuilder"/>
+        <lang.commenter language="PROTO" implementationClass="com.google.protoeditor.ProtoCommenter"/>
+        <lang.formatter language="PROTO" implementationClass="com.google.protoeditor.ProtoFormattingModelBuilder"/>
+        <lang.refactoringSupport language="PROTO" implementationClass="com.google.protoeditor.ProtoRefactoringSupportProvider"/>
+        <lang.findUsagesProvider language="PROTO" implementationClass="com.google.protoeditor.findusages.ProtoFindUsagesProvider"/>
+        <lang.syntaxHighlighterFactory key="PROTO" implementationClass="com.google.protoeditor.highlighting.ProtoSyntaxHighlighter$ProtoSyntaxHighlighterFactory"/>
+        <lang.psiStructureViewFactory language="PROTO" implementationClass="com.google.protoeditor.structureview.ProtoStructureViewBuilderFactory"/>
+        <annotator language="PROTO" implementationClass="com.google.protoeditor.validation.ProtoAnnotator"/>
+        <fileBasedIndex implementation="com.google.protoeditor.index.ProtoSymbolIndex" />
+        <gotoSymbolContributor implementation="com.google.protoeditor.index.ProtoChooseSymbolByNameContributor"/>
+        <gotoClassContributor implementation="com.google.protoeditor.index.ProtoChooseToplevelByNameContributor"/>
+    </extensions>
+    <extensions>
+        <com.google.protoeditor.protoOptionProvider implementation="com.google.protoeditor.parsing.ProtoOptionProviderImpl" />
+    </extensions>
+</idea-plugin>
